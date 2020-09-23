@@ -58,4 +58,21 @@ public class BaseEntity {
 		}
 		return true;
 	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	@SuppressWarnings("unused")
+	private void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
 }
