@@ -10,7 +10,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/empmgmt
     username: nitin
-    password: password
+    password: ENC(q9Ol5HJ6ZzvZaTikm8d6nKKrQH0qLQFb)
   jpa:
     hibernate:
       ddl-auto: none

@@ -94,6 +94,7 @@
 	<modules>
 		<module>../employee-management</module>
 		<module>../asset-management</module>
+		<module>../configuration-server</module>
 		<module>../common</module>
 	</modules>
 
