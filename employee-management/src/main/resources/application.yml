@@ -1,0 +1,28 @@
+server:
+  servlet:
+    context-path: /employee
+spring:
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: default
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/empmgmt
+    username: nitin
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibenate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+logging:
+  level:
+    root: info
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
