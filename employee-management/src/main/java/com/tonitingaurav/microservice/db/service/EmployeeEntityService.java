@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.tonitingaurav.microservice.db.entity.EmployeeEntity;
 import com.tonitingaurav.microservice.db.repository.EmployeeRepository;
 import com.tonitingaurav.microservice.exception.EmployeeAlreadyExistException;
+import com.tonitingaurav.microservice.exception.EmployeeNotFoundException;
 import com.tonitingaurav.microservice.model.Employee;
 
 @Service
@@ -30,5 +31,13 @@ public class EmployeeEntityService {
 		EmployeeEntity employeeEntity = modelMapper.map(employee, EmployeeEntity.class);
 		employeeEntity = employeeRepository.save(employeeEntity);
 		return employeeEntity.getId();
+	}
+
+	public Employee get(int id) {
+		EmployeeEntity employeeEntity = employeeRepository.findById(id).orElseGet(() -> null);
+		if (employeeEntity == null) {
+			throw new EmployeeNotFoundException("Employee with ID " + id + " not found");
+		}
+		return modelMapper.map(employeeEntity, Employee.class);
 	}
 }

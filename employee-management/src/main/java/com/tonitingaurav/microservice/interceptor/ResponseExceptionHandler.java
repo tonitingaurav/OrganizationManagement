@@ -13,6 +13,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.tonitingaurav.microservice.exception.EmployeeAlreadyExistException;
+import com.tonitingaurav.microservice.exception.EmployeeNotFoundException;
 import com.tonitingaurav.microservice.model.ExceptionResponse;
 
 @ControllerAdvice
@@ -32,17 +33,22 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler({ EmployeeAlreadyExistException.class })
 	public final ResponseEntity<ExceptionResponse> handleDepartmentNotFoundException(Exception ex, WebRequest request) throws Exception {
+		ExceptionResponse exceptionResponse = createExceptionResponse(ex);
+		return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	@ExceptionHandler({ EmployeeNotFoundException.class })
+	public final ResponseEntity<ExceptionResponse> handleEmployeeNotFoundException(Exception ex, WebRequest request) throws Exception {
+		ExceptionResponse exceptionResponse = createExceptionResponse(ex);
+		return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.NOT_FOUND);
+	}
+
+	private ExceptionResponse createExceptionResponse(Exception ex) {
 		LOGGER.error(ex.getMessage(), ex);
-		if (ex instanceof EmployeeAlreadyExistException) {
-			ExceptionResponse exceptionResponse = new ExceptionResponse();
-			exceptionResponse.setMessageType("Error");
-			exceptionResponse.setMessage("Employee already exists");
-			return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.NOT_FOUND);
-		}
 		ExceptionResponse exceptionResponse = new ExceptionResponse();
 		exceptionResponse.setMessageType("Error");
-		exceptionResponse.setMessage("Unknown Error");
-		return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+		exceptionResponse.setMessage(ex.getMessage());
+		return exceptionResponse;
 	}
 
 	@Override

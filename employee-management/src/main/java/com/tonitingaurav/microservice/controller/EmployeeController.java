@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,10 +26,13 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeEntityService employeeEntityService;
-	
+
 	@Value("${spring.jackson.date-format}")
 	private String dateFormat;
-	
+
+	public ResponseEntity<Object> get(@PathVariable("id") int id) {
+		return ResponseEntity.ok(employeeEntityService.get(id));
+	}
 
 	@PostMapping
 	public ResponseEntity<Object> create(@Valid @RequestBody Employee employee) {
