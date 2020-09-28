@@ -10,7 +10,8 @@ services:
          MYSQL_PASSWORD: password
       volumes:
       - ../mysql:/var/lib/mysql
-      - ./init.sql:/data/application/init.sql
+      # Make sure that ../mysql is emptry first time if you want to execute init scripts
+      - ./initdb:/docker-entrypoint-initdb.d
       ports:
       - 3306:3306
    config-server:
@@ -20,3 +21,8 @@ services:
       - 8888:8888
       environment:
          JAVA_OPTS: '-Djasypt.encryptor.password=jasy-config-app'
+   discovery-server:
+      image: tonitingaurav/discovery-server
+      restart: always
+      ports:
+      - 8761:8761

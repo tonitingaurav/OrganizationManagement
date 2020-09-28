@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /employee
+    context-path: /asset
 spring:
   cloud:
     config:
@@ -11,7 +11,7 @@ spring:
         bootstrap-mode: default
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/empmgmt
+    url: jdbc:mysql://localhost:3306/asset
     username: nitin
     password: ENC(q9Ol5HJ6ZzvZaTikm8d6nKKrQH0qLQFb)
   jpa:

@@ -3,17 +3,17 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>asset-management</artifactId>
+	<artifactId>discovery-server</artifactId>
 	<packaging>jar</packaging>
-	<name>asset-management</name>
+	<name>discovery-server</name>
 	<url>http://maven.apache.org</url>
 
 
 	<properties>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
-		<start-class>com.tonitingaurav.microservice.AssetApplicationStartup</start-class>
-		<docker.image.name>tonitingaurav/asset-management</docker.image.name>
+		<start-class>com.tonitingaurav.microservice.ConfigurationServerStartup</start-class>
+		<docker.image.name>tonitingaurav/discovery-server</docker.image.name>
 		<docker.image.tag>latest</docker.image.tag>
 	</properties>
 
@@ -27,31 +27,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-config-client</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -59,7 +36,7 @@
 		<dependencies>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
+				<artifactId>spring-cloud-starter-parent</artifactId>
 				<version>${spring-cloud.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
@@ -68,7 +45,7 @@
 	</dependencyManagement>
 
 	<build>
-		<finalName>asset-management</finalName>
+		<finalName>discovery-server</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

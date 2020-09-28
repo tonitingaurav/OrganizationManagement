@@ -12,9 +12,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableEncryptableProperties
 @EnableSwagger2
 @SpringBootApplication
-public class EmployeeApplicationStartup {
+public class AssetApplicationStartup {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EmployeeApplicationStartup.class, args);
+		SpringApplication.run(AssetApplicationStartup.class, args);
 	}
 }
