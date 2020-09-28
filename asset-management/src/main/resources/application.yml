@@ -13,7 +13,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/asset
     username: nitin
-    password: ENC(q9Ol5HJ6ZzvZaTikm8d6nKKrQH0qLQFb)
+    # \.m2\repository\org\jasypt\jasypt\1.9.2>java -cp ./jasypt-1.9.2.jar org.jasypt.intf.cli.JasyptPBEStringEncryptionCLI input=password password=jasy-asset-app algorithm=PBEWithMD5AndDES
+    password: ENC(fQvAPz53rOWgchG73p74MOPWbUwD/6ha)
   jpa:
     hibernate:
       ddl-auto: none
