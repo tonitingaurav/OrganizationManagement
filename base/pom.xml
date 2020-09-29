@@ -102,6 +102,7 @@
 		<module>../asset-management</module>
 		<module>../configuration-server</module>
 		<module>../common</module>
+		<module>../org-orchestration</module>
 	</modules>
 
 </project>
