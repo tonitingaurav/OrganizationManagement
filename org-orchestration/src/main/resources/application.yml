@@ -19,3 +19,7 @@ management:
     web:
       exposure:
         include: '*'
+#Below is required if we are not using Eureka naming server
+#employee-management:
+  #ribbon:
+    #listOfServers: http://localhost:8080,http://localhost:8081
