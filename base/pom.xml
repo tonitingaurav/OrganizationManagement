@@ -103,6 +103,8 @@
 		<module>../configuration-server</module>
 		<module>../common</module>
 		<module>../org-orchestration</module>
+		<module>../zuul-api-gateway</module>
+		<module>../discovery-server</module>
 	</modules>
 
 </project>
