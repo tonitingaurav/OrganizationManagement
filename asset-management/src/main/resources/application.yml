@@ -1,6 +1,4 @@
 server:
-  servlet:
-    context-path: /asset
   port: 8090
 spring:
   cloud:

@@ -22,7 +22,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/asset")
 @Api(value = "Asset CURD Operations", tags = { "asset" })
 public class AssetController {
 
