@@ -1,6 +1,6 @@
 FROM openjdk:8-jdk-alpine
 RUN  apk update && apk upgrade && apk add netcat-openbsd
-EXPOSE 8080
+EXPOSE 8090
 
 ENV APP_HOME /usr/local/employee-app
 ENV JAVA_OPTS=""
