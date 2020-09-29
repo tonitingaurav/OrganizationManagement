@@ -1,4 +1,4 @@
-package com.tonitingaurav.microservice.db.enums;
+package com.tonitingaurav.microservice.enums;
 
 public enum AssetType {
 

@@ -8,8 +8,8 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.tonitingaurav.microservice.db.enums.AssetType;
-import com.tonitingaurav.microservice.db.enums.Condition;
+import com.tonitingaurav.microservice.enums.AssetType;
+import com.tonitingaurav.microservice.enums.Condition;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -21,6 +21,8 @@ public class Asset {
 	@ApiModelProperty(value = "Asset unique ID", example = "ewrtr-gfhj-yytr-46ghp")
 	private String assetId;
 
+	// https://www.baeldung.com/javax-validations-enums -- Follow this to put enum
+	// validations
 	@NotNull
 	@ApiModelProperty(value = "Type of the Asset", example = "LAPTOP")
 	private AssetType assetType;

@@ -12,8 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.tonitingaurav.microservice.db.enums.AssetType;
-import com.tonitingaurav.microservice.db.enums.Condition;
+import com.tonitingaurav.microservice.enums.AssetType;
+import com.tonitingaurav.microservice.enums.Condition;
 
 @Entity
 @Table(name = "ASSET")
