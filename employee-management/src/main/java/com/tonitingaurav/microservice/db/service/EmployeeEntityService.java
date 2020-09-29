@@ -1,6 +1,7 @@
 package com.tonitingaurav.microservice.db.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.modelmapper.ModelMapper;
@@ -12,6 +13,7 @@ import com.tonitingaurav.microservice.db.repository.EmployeeRepository;
 import com.tonitingaurav.microservice.exception.EmployeeAlreadyExistException;
 import com.tonitingaurav.microservice.exception.EmployeeNotFoundException;
 import com.tonitingaurav.microservice.model.Employee;
+import com.tonitingaurav.microservice.model.Employees;
 
 @Service
 public class EmployeeEntityService {
@@ -22,7 +24,16 @@ public class EmployeeEntityService {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
-	public Integer addEmployee(Employee employee) {
+	public Employees getAll() {
+		List<EmployeeEntity> allEmpEntities = employeeRepository.findAll();
+		Employees employees = new Employees();
+		if (CollectionUtils.isNotEmpty(allEmpEntities)) {
+			employees.setEmployees(allEmpEntities.stream().map(e -> modelMapper.map(e, Employee.class)).collect(Collectors.toList()));
+		}
+		return employees;
+	}
+
+	public Integer add(Employee employee) {
 		String userName = employee.getUserName();
 		List<EmployeeEntity> existingUser = employeeRepository.findByUserName(userName);
 		if (CollectionUtils.isNotEmpty(existingUser)) {

@@ -33,6 +33,12 @@ public class EmployeeController {
 	private String dateFormat;
 
 	@GetMapping
+	@ApiOperation(value = "Get All Employees Detils")
+	public ResponseEntity<Object> getAll() {
+		return ResponseEntity.ok(employeeEntityService.getAll());
+	}
+
+	@GetMapping
 	@RequestMapping("/{id}")
 	@ApiOperation(value = "Get Employee Detils")
 	public ResponseEntity<Object> get(@PathVariable("id") int id) {
@@ -41,7 +47,7 @@ public class EmployeeController {
 
 	@PostMapping
 	public ResponseEntity<Object> create(@Valid @RequestBody Employee employee) {
-		Integer employeeID = employeeEntityService.addEmployee(employee);
+		Integer employeeID = employeeEntityService.add(employee);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(employeeID).toUri();
 		return ResponseEntity.created(location).build();
 	}
