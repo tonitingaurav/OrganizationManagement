@@ -21,6 +21,8 @@ spring:
       hibenate:
         dialect: org.hibernate.dialect.MySQL8Dialect
 eureka:
+  instance:
+    prefer-ip-address: true
   client:
     register-with-eureka: true
     fetch-registry: true

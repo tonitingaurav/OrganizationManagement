@@ -1,6 +1,6 @@
 FROM openjdk:8-jdk-alpine
 RUN  apk update && apk upgrade && apk add netcat-openbsd && apk add curl
-EXPOSE 8888
+EXPOSE 8765
 
 ENV APP_HOME /usr/local/configserver
 ENV JAVA_OPTS=""

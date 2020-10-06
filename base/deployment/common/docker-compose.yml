@@ -1,8 +1,9 @@
-version: '3'
+version: '3.7'
 services:
    db:
       image: mysql:8
       restart: always
+      mem_limit: 500m
       environment:
          MYSQL_ROOT_PASSWORD: pass
          MYSQL_DATABASE: empmgmt
@@ -14,15 +15,67 @@ services:
       - ./initdb:/docker-entrypoint-initdb.d
       ports:
       - 3306:3306
+   zookeeper-1:
+      image: confluentinc/cp-zookeeper:latest
+      hostname: zookeeper-1
+      mem_limit: 500m
+      ports:
+      - 12181:12181
+      volumes:
+      - ../zk/data:/var/lib/zookeeper/data
+      - ../zk/logs:/var/lib/zookeeper/log
+      environment:
+         ZOOKEEPER_SERVER_ID: 1
+         ZOOKEEPER_CLIENT_PORT: 12181
+         ZOOKEEPER_TICK_TIME: 2000
+         ZOOKEEPER_INIT_LIMIT: 5
+         ZOOKEEPER_SYNC_LIMIT: 1
+   kafka-1:
+      image: confluentinc/cp-kafka:latest
+      hostname: kafka-1
+      mem_limit: 500m
+      ports: 
+      - 19092:19092
+      depends_on:
+      - zookeeper-1
+      volumes:
+      - ../kafka/data:/var/lib/kafka/data
+      environment: 
+         KAFKA_BROKER_ID: 1
+         KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:12181
+         KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:19092
+         KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
    config-server:
       image: tonitingaurav/configuration-server
       restart: always
+      mem_limit: 500m
       ports:
       - 8888:8888
       environment:
          JAVA_OPTS: '-Djasypt.encryptor.password=jasy-config-app'
+      depends_on:
+      - "discovery-server"
    discovery-server:
       image: tonitingaurav/discovery-server
       restart: always
+      mem_limit: 500m
       ports:
       - 8761:8761
+      depends_on:
+      - "db"
+   zuul-api-gateway:
+      image: tonitingaurav/zuul-api-gateway
+      restart: always
+      mem_limit: 500m
+      ports:
+      - 8765:8765
+      depends_on:
+      - "discovery-server"
+   zipkin:
+      image: openzipkin/zipkin
+      ports: 
+      - 9411:9411
+      depends_on:
+      - "kafka-1"
+      environment:
+         - KAFKA_BOOTSTRAP_SERVERS=kafka-1:19092

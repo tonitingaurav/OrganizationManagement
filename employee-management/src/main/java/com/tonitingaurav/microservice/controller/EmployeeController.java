@@ -4,6 +4,8 @@ import java.net.URI;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,8 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "Employee CURD Operations", tags = { "employee" })
 public class EmployeeController {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
+
 	@Autowired
 	private EmployeeEntityService employeeEntityService;
 
@@ -35,6 +39,7 @@ public class EmployeeController {
 	@GetMapping
 	@ApiOperation(value = "Get All Employees Detils")
 	public ResponseEntity<Object> getAll() {
+		LOGGER.info("Getting All Employees");
 		return ResponseEntity.ok(employeeEntityService.getAll());
 	}
 

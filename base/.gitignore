@@ -2,3 +2,6 @@
 /.classpath
 /.settings
 /deployment/mysql
+/deployment/rabbitmq
+/deployment/kafka
+/deployment/zk

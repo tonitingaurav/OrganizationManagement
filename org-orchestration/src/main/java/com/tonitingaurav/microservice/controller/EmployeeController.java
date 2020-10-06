@@ -1,5 +1,7 @@
 package com.tonitingaurav.microservice.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,8 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/employee")
 @Api(value = "Employee Application Manager", tags = { "employee" })
 public class EmployeeController {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
 
 	@Autowired
 	private EmployeeService employeeService;
@@ -22,6 +26,7 @@ public class EmployeeController {
 	@GetMapping
 	@ApiOperation(value = "Get All Employees Detils")
 	public Employees getEmployees() {
+		LOGGER.info("Get All Employees Detils");
 		return employeeService.getAllEmployees();
 	}
 }
