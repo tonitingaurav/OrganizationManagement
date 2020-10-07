@@ -4,6 +4,12 @@ spring:
   cloud:
     config:
       enabled: true
+  zipkin:
+    sender:
+      type: kafka
+  kafka:
+    bootstrap-servers:
+    - localhost:19091
 #http://localhost:8761/eureka/apps/org-orchestration
 eureka: 
   instance:

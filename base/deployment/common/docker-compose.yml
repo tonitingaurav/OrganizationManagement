@@ -1,20 +1,5 @@
 version: '3.7'
 services:
-   db:
-      image: mysql:8
-      restart: always
-      mem_limit: 500m
-      environment:
-         MYSQL_ROOT_PASSWORD: pass
-         MYSQL_DATABASE: empmgmt
-         MYSQL_USER: nitin
-         MYSQL_PASSWORD: password
-      volumes:
-      - ../mysql:/var/lib/mysql
-      # Make sure that ../mysql is emptry first time if you want to execute init scripts
-      - ./initdb:/docker-entrypoint-initdb.d
-      ports:
-      - 3306:3306
    zookeeper-1:
       image: confluentinc/cp-zookeeper:latest
       hostname: zookeeper-1
@@ -32,10 +17,11 @@ services:
          ZOOKEEPER_SYNC_LIMIT: 1
    kafka-1:
       image: confluentinc/cp-kafka:latest
-      hostname: kafka-1
+      hostname: localhost
       mem_limit: 500m
       ports: 
       - 19092:19092
+      - 19091:19091
       depends_on:
       - zookeeper-1
       volumes:
@@ -43,8 +29,34 @@ services:
       environment: 
          KAFKA_BROKER_ID: 1
          KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:12181
-         KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:19092
+         KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: DOCKER:PLAINTEXT,LOCAL:PLAINTEXT
+         KAFKA_LISTENERS: DOCKER://0.0.0.0:19092,LOCAL://0.0.0.0:19091
+         KAFKA_ADVERTISED_LISTENERS: DOCKER://kafka-1:19092,LOCAL://localhost:19091
          KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+         KAFKA_INTER_BROKER_LISTENER_NAME: DOCKER
+   zipkin:
+      image: openzipkin/zipkin
+      ports: 
+      - 9411:9411
+      depends_on:
+      - "kafka-1"
+      environment:
+         - KAFKA_BOOTSTRAP_SERVERS=kafka-1:19092
+   db:
+      image: mysql:8
+      restart: always
+      mem_limit: 500m
+      environment:
+         MYSQL_ROOT_PASSWORD: pass
+         MYSQL_DATABASE: empmgmt
+         MYSQL_USER: nitin
+         MYSQL_PASSWORD: password
+      volumes:
+      - ../mysql:/var/lib/mysql
+      # Make sure that ../mysql is emptry first time if you want to execute init scripts
+      - ./initdb:/docker-entrypoint-initdb.d
+      ports:
+      - 3306:3306
    config-server:
       image: tonitingaurav/configuration-server
       restart: always
@@ -71,11 +83,3 @@ services:
       - 8765:8765
       depends_on:
       - "discovery-server"
-   zipkin:
-      image: openzipkin/zipkin
-      ports: 
-      - 9411:9411
-      depends_on:
-      - "kafka-1"
-      environment:
-         - KAFKA_BOOTSTRAP_SERVERS=kafka-1:19092
