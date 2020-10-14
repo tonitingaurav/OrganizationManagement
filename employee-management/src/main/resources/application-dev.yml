@@ -1,0 +1,25 @@
+spring:
+  zipkin:
+    sender:
+      type: kafka
+  kafka:
+    bootstrap-servers:
+    - localhost:19091
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/empmgmt
+    username: nitin
+    password: ENC(q9Ol5HJ6ZzvZaTikm8d6nKKrQH0qLQFb)
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibenate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: docker.for.win.localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

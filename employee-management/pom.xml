@@ -25,10 +25,24 @@
 		<relativePath>../base</relativePath>
 	</parent>
 
+	<!-- <repositories> <repository> <id>local-repo</id> <name>local-repo</name> 
+		<url>file://C:/Users/Nitin.NITIN-PC/.m2/repository</url> </repository> </repositories> -->
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- starter-aop and spring-retry needs to be added to wait for configuration server to be up -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.retry</groupId>
+			<artifactId>spring-retry</artifactId>
 		</dependency>
 
 		<dependency>

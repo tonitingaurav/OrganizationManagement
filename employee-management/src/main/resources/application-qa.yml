@@ -1,10 +1,10 @@
 # Look at the docker-compose.yml files to see other required parameters. 
 # Other required parameters has been passed as docker-compose environment variables
-server:
-  port: 8765
-eureka: 
-  instance:
-    prefer-ip-address: true
-  client:
-    register-with-eureka: true
-    fetch-registry: true
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+logging:
+  level:
+    root: warn

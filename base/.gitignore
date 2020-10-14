@@ -1,7 +1,5 @@
 /.project
 /.classpath
 /.settings
-/deployment/mysql
-/deployment/rabbitmq
-/deployment/kafka
-/deployment/zk
+/deployment/data
+/target/test-classes

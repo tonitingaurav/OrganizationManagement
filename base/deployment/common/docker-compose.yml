@@ -6,9 +6,6 @@ services:
       mem_limit: 500m
       ports:
       - 12181:12181
-      volumes:
-      - ../zk/data:/var/lib/zookeeper/data
-      - ../zk/logs:/var/lib/zookeeper/log
       environment:
          ZOOKEEPER_SERVER_ID: 1
          ZOOKEEPER_CLIENT_PORT: 12181
@@ -22,10 +19,6 @@ services:
       ports: 
       - 19092:19092
       - 19091:19091
-      depends_on:
-      - zookeeper-1
-      volumes:
-      - ../kafka/data:/var/lib/kafka/data
       environment: 
          KAFKA_BROKER_ID: 1
          KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:12181
@@ -38,23 +31,12 @@ services:
       image: openzipkin/zipkin
       ports: 
       - 9411:9411
-      depends_on:
-      - "kafka-1"
       environment:
          - KAFKA_BOOTSTRAP_SERVERS=kafka-1:19092
    db:
       image: mysql:8
       restart: always
       mem_limit: 500m
-      environment:
-         MYSQL_ROOT_PASSWORD: pass
-         MYSQL_DATABASE: empmgmt
-         MYSQL_USER: nitin
-         MYSQL_PASSWORD: password
-      volumes:
-      - ../mysql:/var/lib/mysql
-      # Make sure that ../mysql is emptry first time if you want to execute init scripts
-      - ./initdb:/docker-entrypoint-initdb.d
       ports:
       - 3306:3306
    config-server:
@@ -64,22 +46,22 @@ services:
       ports:
       - 8888:8888
       environment:
-         JAVA_OPTS: '-Djasypt.encryptor.password=jasy-config-app'
-      depends_on:
-      - "discovery-server"
+      - eureka.instance.ip-address=localhost
+      - eureka.client.service-url.defaultZone=http://discovery-server:8761/eureka/
    discovery-server:
       image: tonitingaurav/discovery-server
       restart: always
       mem_limit: 500m
       ports:
       - 8761:8761
-      depends_on:
-      - "db"
    zuul-api-gateway:
       image: tonitingaurav/zuul-api-gateway
       restart: always
       mem_limit: 500m
       ports:
       - 8765:8765
-      depends_on:
-      - "discovery-server"
+      environment:
+      - eureka.instance.ip-address=localhost
+      - eureka.client.service-url.defaultZone=http://discovery-server:8761/eureka/
+      - spring.kafka.bootstrap-servers=kafka-1:19092
+      - spring.zipkin.sender.type=kafka
